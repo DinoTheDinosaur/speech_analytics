@@ -1,6 +1,7 @@
 import sys
 from argparse import ArgumentParser
 from pathlib import Path
+from typing import List
 
 from src.noise_supression._utils import validate_dir
 from src.noise_supression.dataset.dataset import Dataset
@@ -16,6 +17,17 @@ DEFAULTS = {
     'sample_rate': 16000,
     'audio_max_duration': 0.8
 }
+
+
+def create_set(out_path: Path, mcv_filenames: List[str], u8k_filenames: List[str], config=None) -> None:
+    if not validate_dir(out_path):
+        out_path.mkdir(parents=True, exist_ok=True)
+
+    cfg = DEFAULTS if config is None else config
+
+    ds = Dataset(out_path, **cfg)
+    ds.create(mcv_filenames, u8k_filenames)
+
 
 if __name__ == '__main__':
     parser = ArgumentParser()
@@ -39,34 +51,29 @@ if __name__ == '__main__':
     if not validate_dir(out_dir):
         out_dir.mkdir(parents=True, exist_ok=True)
 
-    # get filenames of train and validation datasets
-    print('Getting MCV train and val filenames...')
+    print('Getting MCV train, val and test filenames...')
     mcv = MCV(mcv_dir, 1000)
     mcv_train_filenames, mcv_val_filenames = mcv.get_train_val_filenames()
+    mcv_test_filenames = mcv.get_test_filenames()
 
-    print('Getting U8K train and val filenames...')
+    print('Getting U8K train, val and test filenames...')
     u8k = UrbanSound8k(urban8k_dir, 200)
     u8k_train_filenames, u8k_val_filenames = u8k.get_train_val_filenames()
+    u8k_test_filenames = u8k.get_test_filenames()
 
-    # create train dataset
     train_out_dir = out_dir / 'train'
 
-    if not validate_dir(train_out_dir):
-        train_out_dir.mkdir(parents=True, exist_ok=True)
-
     print('Applying noise to train data...')
-    train = Dataset(train_out_dir, **DEFAULTS)
-    train.create(mcv_train_filenames[:100], u8k_train_filenames)
+    create_set(train_out_dir, mcv_train_filenames, u8k_train_filenames)
 
-    # create validation dataset
-    # val_out_dir = out_dir / 'train'
-    #
-    # if not validate_dir(val_out_dir):
-    #     val_out_dir.mkdir(parents=True, exist_ok=True)
-    #
-    # print('Applying noise to val data...')
-    # val = Dataset(val_out_dir, **DEFAULTS)
-    # val.create(mcv_val_filenames, u8k_val_filenames)
+    val_out_dir = out_dir / 'val'
+
+    print('Applying noise to val data...')
+    create_set(val_out_dir, mcv_val_filenames, u8k_val_filenames)
+
+    test_out_dir = out_dir / 'test'
+
+    print('Applying noise to test data...')
+    create_set(test_out_dir, mcv_test_filenames, u8k_test_filenames)
 
     print('DONE')
-    # create test dataset
