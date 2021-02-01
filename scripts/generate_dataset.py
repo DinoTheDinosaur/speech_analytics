@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 from typing import List
 
-from src.noise_supression._utils import validate_dir
+from src.utils import validate_dir
 from src.noise_supression.dataset.dataset import Dataset
 from src.noise_supression.dataset.mcv import MCV
 from src.noise_supression.dataset.urban_sound_8k import UrbanSound8k
