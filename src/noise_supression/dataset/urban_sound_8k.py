@@ -26,7 +26,7 @@ class UrbanSound8k:
 
     def __get_filenames_by_class_id(self, metadata: pd.DataFrame) -> List[str]:
         if self.__class_ids is None:
-            self.__class_ids = np.unique(metadata['classID'].values)
+            self.__class_ids = np.unique(self.__metadata['classID'].values)
 
         files: List[str] = []
 
@@ -50,7 +50,7 @@ class UrbanSound8k:
         return train, val
 
     def get_test_filenames(self) -> List[str]:
-        test_meta: pd.DataFrame = self.__metadata[self.__metadata == 10]
+        test_meta: pd.DataFrame = self.__metadata[self.__metadata.fold == 10]
 
         test: List[str] = self.__get_filenames_by_class_id(test_meta)
         np.random.shuffle(test)
