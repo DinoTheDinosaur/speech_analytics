@@ -21,27 +21,33 @@ class Dataset:
         self.__window_length: int = kwargs['window_len']
         self.__audio_max_duration: float = kwargs['audio_max_duration']
 
-    def process_clean_file(self, clean_file, noise):
-        clean_audio, _ = read_audio(clean_file, self.__sample_rate)
-        noised = add_noise(clean_audio, noise)
+    def process_file(self, q: mp.Queue) -> None:
+        while True:
+            try:
+                clean_file, noise = q.get()
+            except TypeError:
+                break
 
-        sf.write(self.__out_path / Path(clean_file).name, noised, self.__sample_rate, format='WAV')
+            clean_audio, _ = read_audio(clean_file, self.__sample_rate)
+            noised = add_noise(clean_audio, noise)
+
+            sf.write(self.__out_path / Path(clean_file).name, noised, self.__sample_rate, format='WAV')
 
     def create(self, clean_filenames: List[str], noise_filenames: List[str]) -> None:
         print('Creating arguments list for Pool...')
-        args = ((clean_file, read_audio(np.random.choice(noise_filenames), self.__sample_rate)[0]) for clean_file in
-                clean_filenames)
+        samples = ((clean_file, read_audio(np.random.choice(noise_filenames), self.__sample_rate)[0]) for clean_file in
+                   clean_filenames)
 
         print('Starting processing...')
         q = mp.Queue(maxsize=_CORES)
+        pool = mp.Pool(_CORES, initializer=self.process_file, initargs=(q,))
 
-        with mp.Pool(_CORES) as pool:
-            pool.starmap(self.process_clean_file, args)
+        for samp in samples:
+            q.put(samp)
 
-        # for clean_file in clean_filenames:
-        #     clean_audio, _ = read_audio(clean_file, self.__sample_rate)
-        #     noise, _ = read_audio(np.random.choice(noise_filenames), self.__sample_rate)
-        #
-        #     noised = add_noise(clean_audio, noise)
-        #
-        #     sf.write(out_path / Path(clean_file).name, noised, self.__sample_rate, format='WAV')
+        # tell workers we're done
+        for _ in range(_CORES):
+            q.put(None)
+
+        pool.close()
+        pool.join()
