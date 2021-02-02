@@ -3,7 +3,7 @@ from pathlib import Path
 import librosa
 import torch
 
-from _demucs import Demucs
+from src.noise_supression.model._demucs import Demucs
 
 _DEMUCS_CFG = {
     'chin': 1,
@@ -22,7 +22,7 @@ _DEMUCS_CFG = {
 }
 
 
-def _enhance(model, noisy_mix, sample_len):
+def _enhance(model, noisy_mix, sample_len=16384):
     padded_length = 0
 
     if noisy_mix.size(-1) % sample_len != 0:
@@ -57,4 +57,4 @@ def suppress_noise_without_sample(model_weights_path: Path, audio_path: Path, sa
     if device == 'gpu':
         signal_torch.to('gpu')
 
-    return _enhance(model, signal_torch.unsqueeze(0), librosa.get_duration(signal)), sample_rate
+    return _enhance(model, signal_torch.unsqueeze(0)), sample_rate
