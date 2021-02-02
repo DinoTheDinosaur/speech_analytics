@@ -41,14 +41,14 @@ def search_one_syn_phrase(input_text: str, syn_phrases: list) -> bool:
 
 
 class WhiteCheck:
-    def __init__(self, file_with_list):
+    def __init__(self, file_with_list: str):
         """
         :param file_with_list: filename; file with the json extension where the white list is saved
         """
         with open(file_with_list, "r", encoding='utf-8') as file:
             self.list = json.load(file)
 
-    def update_list(self, arr_of_syn_sent: list, file_with_list):
+    def update_list(self, arr_of_syn_sent: list, file_with_list: str):
         """
         :param arr_of_syn_sent: list of dictionaries with keys: 'phrase' which means one of synonymous phrases, type
         of value is str; and 'keywords' which means str with all keywords in phrase, type of value is str;
