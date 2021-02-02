@@ -57,4 +57,4 @@ def suppress_noise_without_sample(model_weights_path: Path, audio_path: Path, sa
     if device == 'gpu':
         signal_torch.to('gpu')
 
-    return _enhance(model, signal_torch.unsqueeze(0)), sample_rate
+    return _enhance(model, signal_torch.unsqueeze(0))
