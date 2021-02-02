@@ -4,9 +4,9 @@ from pathlib import Path
 from typing import List
 
 from src.utils import validate_dir
-from src.noise_supression.dataset.dataset import Dataset
-from src.noise_supression.dataset.mcv import MCV
-from src.noise_supression.dataset.urban_sound_8k import UrbanSound8k
+from src.noise_supression.dataset import Dataset
+from src.noise_supression.dataset import MCV
+from src.noise_supression.dataset import UrbanSound8k
 
 EXIT_CODE: int = 1
 WINDOW_LEN: int = 256
