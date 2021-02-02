@@ -1,14 +1,30 @@
-import os
+from pathlib import Path
+
+import librosa
 import torch
 
-import hydra
-import librosa
-import soundfile as sf
+from _demucs import Demucs
 
-from demucs import Demucs
+_DEMUCS_CFG = {
+    'chin': 1,
+    'chout': 1,
+    'hidden': 48,
+    'max_hidden': 10000,
+    'causal': True,
+    'glu': True,
+    'depth': 5,
+    'kernel_size': 8,
+    'stride': 4,
+    'normalize': True,
+    'resample': 4,
+    'growth': 2,
+    'rescale': 0.1,
+}
 
 
-def enhance(model, noisy_mix, sample_len):
+def _enhance(model, noisy_mix, sample_len):
+    padded_length = 0
+
     if noisy_mix.size(-1) % sample_len != 0:
         padded_length = sample_len - (noisy_mix.size(-1) % sample_len)
         noisy_mix = torch.cat(
@@ -30,22 +46,15 @@ def enhance(model, noisy_mix, sample_len):
     return enhanced
 
 
-@hydra.main(config_name="inference_conf.yaml")
-def cleaner(cfg):
-    checkpoint = torch.load(cfg.model_weights, map_location=cfg.device)
-    model = Demucs(**cfg.demucs)
+def suppress_noise_without_sample(model_weights_path: Path, audio_path: Path, sample_rate: int, device: str = 'cpu'):
+    checkpoint = torch.load(model_weights_path, map_location=device)
+    model = Demucs(**_DEMUCS_CFG)
     model.load_state_dict(checkpoint)
-    signal, sr = librosa.load(cfg.file, cfg.sr)
+
+    signal, sr = librosa.load(audio_path, sample_rate)
     signal_torch = torch.tensor(signal, dtype=torch.float32).unsqueeze(0)
-    if cfg.device == "gpu":
-        signal_torch.to("gpu")
 
-    enhanced_signal = enhance(model, signal_torch.unsqueeze(0), cfg.sample_len)
-    os.makedirs(cfg.save_dir, exist_ok=True)
-    f_name = cfg.file.split("/")[-1].replace(".wav", "_clean.wav")
-    save_path = os.path.join(cfg.save_dir, f_name)
-    sf.write(save_path, enhanced_signal, cfg.sr)
+    if device == 'gpu':
+        signal_torch.to('gpu')
 
-
-if __name__ == "__main__":
-    cleaner()
+    return _enhance(model, signal_torch.unsqueeze(0), librosa.get_duration(signal)), sample_rate
