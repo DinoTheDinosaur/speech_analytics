@@ -1,17 +1,17 @@
 import sys
-from argparse import ArgumentParser
+from argparse import ArgumentParser, Namespace
 from pathlib import Path
-from typing import List
+from typing import List, Dict
 
-from src.utils import validate_dir
 from src.noise_supression.dataset import Dataset
 from src.noise_supression.dataset import MCV
 from src.noise_supression.dataset import UrbanSound8k
+from src.utils import validate_dir
 
 EXIT_CODE: int = 1
 WINDOW_LEN: int = 256
 
-DEFAULTS = {
+DEFAULTS: Dict = {
     'window_len': WINDOW_LEN,
     'overlap': round(0.25 * WINDOW_LEN),
     'sample_rate': 16000,
@@ -19,11 +19,11 @@ DEFAULTS = {
 }
 
 
-def create_set(out_path: Path, mcv_filenames: List[str], u8k_filenames: List[str], config=None) -> None:
+def create_set(out_path: Path, mcv_filenames: List[str], u8k_filenames: List[str], config: Dict = None) -> None:
     if not validate_dir(out_path):
         out_path.mkdir(parents=True, exist_ok=True)
 
-    cfg = DEFAULTS if config is None else config
+    cfg: Dict = DEFAULTS if config is None else config
 
     ds = Dataset(out_path, **cfg)
     ds.create(mcv_filenames, u8k_filenames)
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser.add_argument('urban8k_dir', type=str, help='Directory with UrbanSound8K dataset.')
     parser.add_argument('out_dir', type=str, help='Directory for resulting files.')
 
-    args = parser.parse_args()
+    args: Namespace = parser.parse_args()
     mcv_dir = Path(args.mcv_dir)
     urban8k_dir = Path(args.urban8k_dir)
     out_dir = Path(args.out_dir)
