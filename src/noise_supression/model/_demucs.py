@@ -12,7 +12,7 @@ import torch as th
 from torch import nn
 from torch.nn import functional as F
 
-from resample import downsample2, upsample2
+from _resample import downsample2, upsample2
 import functools
 
 
