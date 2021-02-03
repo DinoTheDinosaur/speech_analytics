@@ -12,7 +12,7 @@ import torch as th
 from torch import nn
 from torch.nn import functional as F
 
-from src.noise_suppression.model._resample import downsample2, upsample2
+from src.noise_suppression.nn._resample import downsample2, upsample2
 import functools
 
 
@@ -67,7 +67,7 @@ def rescale_module(module, reference):
 
 class Demucs(nn.Module):
     """
-    Demucs speech enhancement model.
+    Demucs speech enhancement nn.
     Args:
         - chin (int): number of input channels.
         - chout (int): number of output channels.
@@ -80,7 +80,7 @@ class Demucs(nn.Module):
             Can be one of 1, 2 or 4.
         - growth (float): number of channels is multiplied by this for every layer.
         - max_hidden (int): maximum number of channels. Can be useful to
-            control the size/speed of the model.
+            control the size/speed of the nn.
         - normalize (bool): if true, normalize the input.
         - glu (bool): if true uses GLU instead of ReLU in 1x1 convolutions.
         - rescale (float): controls custom weight initialization.
@@ -158,7 +158,7 @@ class Demucs(nn.Module):
 
     def valid_length(self, length):
         """
-        Return the nearest valid length to use with the model so that
+        Return the nearest valid length to use with the nn so that
         there is no time steps left over in a convolutions, e.g. for all
         layers, size of the input - kernel_size % stride = 0.
         If the mixture has a valid length, the estimated sources
@@ -254,7 +254,7 @@ class DemucsStreamer:
     of audio at a time. You will get back as much audio as possible at that
     point.
     Args:
-        - demucs (Demucs): Demucs model.
+        - demucs (Demucs): Demucs nn.
         - dry (float): amount of dry (e.g. input) signal to keep. 0 is maximum
             noise removal, 1 just returns the input signal. Small values > 0
             allows to limit distortions.
@@ -330,7 +330,7 @@ class DemucsStreamer:
 
     def feed(self, wav):
         """
-        Apply the model to mix using true real time evaluation.
+        Apply the nn to mix using true real time evaluation.
         Normalization is done online as is the resampling.
         """
         begin = time.time()
