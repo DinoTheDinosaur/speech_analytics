@@ -1,0 +1,1 @@
+NP_RANDOM_SEED: int = 1337
