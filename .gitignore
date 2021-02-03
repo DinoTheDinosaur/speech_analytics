@@ -128,8 +128,14 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-#diarizarion part
-.idea
+# PyCharm stuff
+.idea/
+
+# VAD
+data/
+notebooks/
+
+# Diarization
 src/diarization/out
 src/diarization/pyBK/audio
 src/diarization/pyBK/out
