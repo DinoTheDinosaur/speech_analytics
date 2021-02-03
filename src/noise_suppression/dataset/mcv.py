@@ -4,7 +4,7 @@ from typing import List, Tuple
 import numpy as np
 import pandas as pd
 
-from src.noise_supression.dataset._const import NP_RANDOM_SEED
+from src.noise_suppression.dataset._const import NP_RANDOM_SEED
 
 np.random.seed(NP_RANDOM_SEED)
 

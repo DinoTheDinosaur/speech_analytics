@@ -3,9 +3,9 @@ from argparse import ArgumentParser, Namespace
 from pathlib import Path
 from typing import List, Dict
 
-from src.noise_supression.dataset import Dataset
-from src.noise_supression.dataset import MCV
-from src.noise_supression.dataset import UrbanSound8k
+from src.noise_suppression.dataset import Dataset
+from src.noise_suppression.dataset import MCV
+from src.noise_suppression.dataset import UrbanSound8k
 from src.utils import validate_dir
 
 EXIT_CODE: int = 1

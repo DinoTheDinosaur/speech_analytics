@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from scipy.signal import convolve
 
-from src.noise_supression.model._demucs import Demucs
+from src.noise_suppression.model._demucs import Demucs
 
 _DEMUCS_CFG = {
     'chin': 1,

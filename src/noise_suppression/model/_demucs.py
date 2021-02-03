@@ -12,7 +12,7 @@ import torch as th
 from torch import nn
 from torch.nn import functional as F
 
-from src.noise_supression.model._resample import downsample2, upsample2
+from src.noise_suppression.model._resample import downsample2, upsample2
 import functools
 
 

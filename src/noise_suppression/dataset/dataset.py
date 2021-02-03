@@ -6,8 +6,8 @@ from typing import List, Dict
 import numpy as np
 import soundfile as sf
 
-from src.noise_supression.dataset._const import NP_RANDOM_SEED
-from src.noise_supression.dataset._utils import add_noise, read_audio
+from src.noise_suppression.dataset._const import NP_RANDOM_SEED
+from src.noise_suppression.dataset._utils import add_noise, read_audio
 
 warnings.filterwarnings('ignore', category=UserWarning)
 
