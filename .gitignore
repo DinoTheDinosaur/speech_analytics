@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#diarizarion part
+.idea
+src/diarization/out
+src/diarization/pyBK/audio
+src/diarization/pyBK/out
+src/diarization/pyBK/sad
+src/diarization/pyBK/uem
