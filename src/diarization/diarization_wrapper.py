@@ -7,10 +7,13 @@ from .pyBK.main import runDiarization
 import configparser
 from pydiarization.diarization_wrapper import rttm_to_string
 
+ #helper function
+def getCurrentSpeakerCut(rttmString):
+    return float(rttmString.split(' ')[3]), float(rttmString.split(' ')[3]) + float(rttmString.split(' ')[4]), rttmString.split(' ')[7]
 
 def runDiarization_wrapper(showName):
     """Running Diarization from pyBK and returning stereo array in output"""
-    
+
     #reading pyBK config file
     configFile = './diarization/pyBK/config.ini'
     config = configparser.ConfigParser()
@@ -44,10 +47,6 @@ def runDiarization_wrapper(showName):
     rttmString = rttm_to_string(path)
     resArray = rttmString.split('SPEAKER')
 
-    #helper function
-    def getCurrentSpeakerCut(rttmString):
-      return float(rttmString.split(' ')[3]), float(rttmString.split(' ')[3]) + float(rttmString.split(' ')[4]), rttmString.split(' ')[7]
-
     #Reading mono file
     sampling_rate, signal = audioBasicIO.read_audio_file(showName)
     signal = audioBasicIO.stereo_to_mono(signal)
@@ -79,6 +78,6 @@ def runDiarization_wrapper(showName):
     #output_file = config['PATH']['file_output'] + fileName + "_stereo.wav"
     #write(output_file, sampling_rate, stereo_array)
 
-    #return stereo file path
+    #return stereo_array
     return stereo_array
 
