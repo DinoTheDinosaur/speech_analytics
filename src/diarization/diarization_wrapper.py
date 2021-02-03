@@ -3,14 +3,14 @@ from scipy.io.wavfile import write
 import os, sys, glob
 import numpy as np
 
-from pyBK.main import runDiarization
+from .pyBK.main import runDiarization
 import configparser
 from pydiarization.diarization_wrapper import rttm_to_string
 
 
 def runDiarization_wrapper(showName):
     #reading pyBK config file
-    configFile = './pyBK/config.ini'
+    configFile = './diarization/pyBK/config.ini'
     config = configparser.ConfigParser()
     config.read(configFile)
     #extracting file name
@@ -38,17 +38,16 @@ def runDiarization_wrapper(showName):
 
     # Parsing rttm file for extraction speakers time
     rttm_file = config['EXPERIMENT']['name'] + ".rttm"
-    path = "./pyBK/out/" + rttm_file
+    path = "./diarization/pyBK/out/" + rttm_file
     rttmString = rttm_to_string(path)
     resArray = rttmString.split('SPEAKER')
-    print(resArray[-1].split(' ')) # here time in seconds
 
     #helper function
     def getCurrentSpeakerCut(rttmString):
       return float(rttmString.split(' ')[3]), float(rttmString.split(' ')[3]) + float(rttmString.split(' ')[4]), rttmString.split(' ')[7]
 
     #Reading mono file
-    sampling_rate, signal = audioBasicIO.read_audio_file(audio_file_path)
+    sampling_rate, signal = audioBasicIO.read_audio_file(showName)
     signal = audioBasicIO.stereo_to_mono(signal)
 
     #arrays for left and right  channels of stereo file
@@ -57,6 +56,7 @@ def runDiarization_wrapper(showName):
 
     #extracting speech of every speaker#1  and speaker#2
     for i in range(1,len(resArray)):
+        #convertion time to sample number
         begin, end, speaker = getCurrentSpeakerCut(resArray[i])
         begin = int(begin * sampling_rate)
         end = int(end * sampling_rate)
@@ -76,10 +76,4 @@ def runDiarization_wrapper(showName):
 
     #return stereo file path
     return output_file
-
-if __name__ == "__main__":
-    #file for test
-    audio_file_path = './pyBK/audio/litvinova_mono.wav'
-    runDiarization_wrapper(audio_file_path)
-
 
