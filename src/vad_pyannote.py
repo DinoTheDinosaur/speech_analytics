@@ -33,19 +33,19 @@ class VoiceActivityDetection:
         self.binarize = Binarize(**binarize_params)
 
     @staticmethod
-    def validate_wav_file(file_path):
+    def _validate_wav_file(file_path):
         try:
             with wave.open(file_path, 'rb') as f:
                 if f.getnchannels() != 2:
                     raise VADException(
-                        'Invalid number of channels for wav file'
+                        'Invalid number of channels for wav file. Must be 2.'
                     )
         except wave.Error as e:
             raise VADException(f'Invalid format of wav file: {e}')
 
     @staticmethod
-    def prepare_wav_by_channels(
-            source_wav, operator_channel, client_channel, tmpdir
+    def _prepare_wav_by_channels(
+        source_wav, operator_channel, client_channel, tmpdir
     ):
         rate, data = wavfile.read(source_wav)
         operator_data = data[:, operator_channel]
@@ -59,18 +59,19 @@ class VoiceActivityDetection:
 
         return operator_file_path, client_file_path
 
-    def get_timeline(self, file_path):
+    def _get_timeline(self, file_path):
         sad_scores = self.sad({'uri': 'filename', 'audio': file_path})
         speech = self.binarize.apply(sad_scores, dimension=0)
         return speech.for_json()['content']
 
     def get_timelines(self, file_path, operator_channel):
         """
-        Для двухканального wav-файла возвращает разметку/таймлайн разговора.
+        Для двухканального wav-файла возвращает разметку/таймлайн разговора
+        оператора с клиентом.
 
         :note:
             Предполагается, что оператор и клиент разнесены по двум разным
-            каналам.
+            каналам wav-файла.
 
         :param file_path:
             `str`, путь до исходного wav-файла.
@@ -81,7 +82,7 @@ class VoiceActivityDetection:
             `dict`, словарь разметки вида:
             {
                 'operator_timeline': [
-                    {'start': 10, 'end': '12'},
+                    {'start': 10.5, 'end': '12.1'},
                     ...
                 ],
                 'client_timeline': [
@@ -89,22 +90,20 @@ class VoiceActivityDetection:
                     ...
                 ]
             }
+            где параметры `start` и `end` указаны в секундах.
         """
         if operator_channel not in (0, 1):
             raise VADException('Invalid number of operator channel')
 
         client_channel = 0 if operator_channel else 1
 
-        self.validate_wav_file(file_path)
+        self._validate_wav_file(file_path)
 
         with tempfile.TemporaryDirectory() as tmpdir:
-            operator_wav, client_wav = self.prepare_wav_by_channels(
+            operator_wav, client_wav = self._prepare_wav_by_channels(
                 file_path, operator_channel, client_channel, tmpdir
             )
-            operator_timeline = self.get_timeline(operator_wav)
-            client_timeline = self.get_timeline(client_wav)
-
-        return {
-            'operator_timeline': operator_timeline,
-            'client_timeline': client_timeline,
-        }
+            return {
+                'operator_timeline': self._get_timeline(operator_wav),
+                'client_timeline': self._get_timeline(client_wav),
+            }
