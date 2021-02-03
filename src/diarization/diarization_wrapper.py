@@ -63,7 +63,10 @@ def runDiarization_wrapper(showName):
 
         if speaker == 'speaker1':
             left[begin:end] = signal[begin:end]
-        if speaker == "speaker2":
+        elif speaker == "speaker2":
+            right[begin:end] = signal[begin:end]
+        else:
+            left[begin:end] = signal[begin:end]
             right[begin:end] = signal[begin:end]
 
     # convert float to int - it help to avoid problems with incorrectly saved wav file

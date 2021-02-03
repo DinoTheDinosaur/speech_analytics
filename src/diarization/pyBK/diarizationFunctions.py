@@ -6,6 +6,7 @@
 # DIARIZATION FUNCTIONS
 
 import numpy as np
+import warnings
     
 def extractFeatures(audioFile,framelength,frameshift,nfilters,ncoeff):
     import librosa
