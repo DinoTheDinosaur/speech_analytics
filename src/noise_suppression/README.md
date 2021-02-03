@@ -3,7 +3,7 @@
 This module contains 2 ways for noise suppression.
 
 # Suppress noise by sample using spectral gating algorithm
-You can read more about this algorithm at ``https://timsainburg.com/noise-reduction-python.html``.
+You can read more about this algorithm at https://timsainburg.com/noise-reduction-python.html.
 
 #### Usage example:
 ```python
