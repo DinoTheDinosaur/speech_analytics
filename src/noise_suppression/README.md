@@ -5,7 +5,7 @@ This module contains 2 ways for noise suppression.
 # Suppress noise by sample using spectral gating algorithm
 You can read more about this algorithm at ``https://timsainburg.com/noise-reduction-python.html``.
 
-Usage example:
+#### Usage example:
 ```python
 import noisereduce as nr
 import scipy.io
@@ -21,11 +21,11 @@ reduced_noise = nr.reduce_noise(audio_clip=data, noise_clip=noisy_part)
 ```
 
 # Suppress noise without sample using pretrained neural network
-Used pretrained model from ``https://github.com/diff7/Denoising``.
+Used [pretrained model](https://github.com/diff7/Denoising). In case you didn't find model weights in speech_analytics repo, you can download them from [here](https://drive.google.com/file/d/1Ih8pZ3n4i6VXgwKFYQfMWu3PwCiPtgpG/view?usp=sharing).
 
-You can get more information about model's architecture at ``https://github.com/facebookresearch/denoiser``.
+You can get more information about model's architecture at the [original repo](https://github.com/facebookresearch/denoiser).
 
-Usage example:
+#### Usage example:
 ```python
 from pathlib import Path
 
