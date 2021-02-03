@@ -9,6 +9,8 @@ from pydiarization.diarization_wrapper import rttm_to_string
 
 
 def runDiarization_wrapper(showName):
+    """Running Diarization from pyBK and returning stereo array in output"""
+    
     #reading pyBK config file
     configFile = './diarization/pyBK/config.ini'
     config = configparser.ConfigParser()
@@ -74,9 +76,9 @@ def runDiarization_wrapper(showName):
     stereo_array = np.vstack((left.astype(np.int16), right.astype(np.int16))).T
 
     #saving stereo file
-    output_file = config['PATH']['file_output'] + fileName + "_stereo.wav"
-    write(output_file, sampling_rate, stereo_array)
+    #output_file = config['PATH']['file_output'] + fileName + "_stereo.wav"
+    #write(output_file, sampling_rate, stereo_array)
 
     #return stereo file path
-    return output_file
+    return stereo_array
 
