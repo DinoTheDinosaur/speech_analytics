@@ -33,7 +33,7 @@ class NeuralNetworkNoiseSuppressor:
         self.__filter = [0.5, 0.75, 1, 0.75, 0.5]
 
     def suppress(self, audio_path: Path, sample_rate: int, device: str = 'cpu'):
-        signal, _ = librosa.load(audio_path, sample_rate)
+        signal, sr = librosa.load(audio_path, sample_rate)
         signal = convolve(signal, self.__filter, mode='same')
         signal /= np.max(np.abs(signal))
 
@@ -43,7 +43,10 @@ class NeuralNetworkNoiseSuppressor:
             signal_torch = signal_torch.to(device)
             self.__model.to(device)
 
-        return self.__enhance(signal_torch.unsqueeze(0), device)
+        signal = self.__enhance(signal_torch.unsqueeze(0), device).numpy()
+        signal /= np.max(np.abs(signal))
+
+        return signal, sr
 
     def __enhance(self, noisy_mix, device: str, sample_len: int = 16384):
         padded_length = 0
