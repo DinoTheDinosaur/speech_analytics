@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#TelegramBot part
+src/speech_analytics_bot/TOKEN.txt

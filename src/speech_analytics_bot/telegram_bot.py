@@ -1,9 +1,11 @@
 from telegram.ext import Updater
 from telegram.ext import CommandHandler
 from telegram.ext import MessageHandler, Filters
+import filetype
 import logging
 
-BOT_TOKEN = '1647912384:AAGXSHJva_4eDHkbLx1Rw70qs4qZyT4k96k'
+token_file = open('TOKEN.txt')
+BOT_TOKEN = token_file.read()
 
 updater = Updater(token=BOT_TOKEN, use_context=True)
 
@@ -13,7 +15,7 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 
 def start(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text="I'm a bot, please talk to me!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Hi, I`m CallCenterAnalyticsBot. Ready to get dialog recording(in .wav) and return report about operator work. ")
 
 def wav_downloader(update, context):
     context.bot.get_file(update.message.document).download()
@@ -23,6 +25,7 @@ def wav_downloader(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="File saved")
     context.bot.send_message(chat_id=update.effective_chat.id, text="Starting processing")
 
+#def convert_wav():
 
 start_handler = CommandHandler('start', start)
 

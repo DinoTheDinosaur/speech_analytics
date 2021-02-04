@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="651a9db2-0aad-4197-8930-5c55f59814a2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/speech_analytics_bot/telegram_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/speech_analytics_bot/telegram_bot.py" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="speech_analytics_bot" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/DinoTheDinosaur/speech_analytics" />
+      </set>
+    </option>
+  </component>
+  <component name="JupyterTrust" id="c8560ff6-2172-48bb-8aed-d802b6a952db" />
+  <component name="ProjectId" id="1o1YJM9sWxoN1npnKK3yc11TpMZ" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../TelegaBot" />
+  </component>
+  <component name="RunManager">
+    <configuration name="telegram_bot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="speech_analytics" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/src/speech_analytics_bot" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/speech_analytics_bot/telegram_bot.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.telegram_bot" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="651a9db2-0aad-4197-8930-5c55f59814a2" name="Default Changelist" comment="" />
+      <created>1612455491123</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1612455491123</updated>
+      <workItem from="1612455492702" duration="541000" />
+      <workItem from="1612456349229" duration="31000" />
+      <workItem from="1612457982978" duration="26000" />
+      <workItem from="1612458029000" duration="82000" />
+      <workItem from="1612462094797" duration="3615000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="93" y="133" width="1350" height="638" key="DiffContextDialog" timestamp="1612464465715">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state x="93" y="133" width="1350" height="638" key="DiffContextDialog/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612464465715" />
+    <state x="549" y="207" key="FileChooserDialogImpl" timestamp="1612458111084">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state x="549" y="207" key="FileChooserDialogImpl/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612458111084" />
+    <state width="1493" height="203" key="GridCell.Tab.0.bottom" timestamp="1612466009551">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state width="1493" height="203" key="GridCell.Tab.0.bottom/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
+    <state width="1493" height="203" key="GridCell.Tab.0.center" timestamp="1612466009551">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state width="1493" height="203" key="GridCell.Tab.0.center/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
+    <state width="1493" height="203" key="GridCell.Tab.0.left" timestamp="1612466009551">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state width="1493" height="203" key="GridCell.Tab.0.left/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
+    <state width="1493" height="203" key="GridCell.Tab.0.right" timestamp="1612466009551">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state width="1493" height="203" key="GridCell.Tab.0.right/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
+    <state x="93" y="133" width="1350" height="638" key="ShowDiffWithBranchDialog" timestamp="1612464465715">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state x="93" y="133" width="1350" height="638" key="ShowDiffWithBranchDialog/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612464465715" />
+    <state x="586" y="366" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1612464138107">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state x="586" y="366" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612464138107" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/speech_analytics$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1612466009542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/speech_analytics_bot" />
+  </component>
+</project>
