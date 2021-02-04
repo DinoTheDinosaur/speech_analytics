@@ -29,8 +29,8 @@ class WhiteCheck:
     def search_one_syn_phrase(input_text: str, syn_phrases: list) -> bool:
         """
         :param input_text: input text of operator's speech
-        :param syn_phrases: list of dictionaries with keys: 'phrase' which means one of synonymous phrases, type of value
-        is str; and 'keywords' which means str with all keywords in phrase, type of value is str;
+        :param syn_phrases: list of dictionaries with keys: 'phrase' which means one of synonymous phrases, type of
+        value is str; and 'keywords' which means str with all keywords in phrase, type of value is str;
         """
         output = False
         for dct in syn_phrases:

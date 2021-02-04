@@ -1,5 +1,5 @@
 import re
-import spacy
+from pymorphy2 import MorphAnalyzer
 
 marked_phrases = [['Вас приветствует'], ['компания'], ['Страна Экспресс'], ['разговор', 'записываться'],
                   ['разговор', 'запись'],
@@ -8,10 +8,9 @@ marked_phrases = [['Вас приветствует'], ['компания'], ['�
 
 def text_preprocessing(input_text: str) -> str:
     input_text = re.sub(r'[^\w\s]', '', input_text)
-    input_text.lower()
 
-    nlp = spacy.load('ru2')
-    input_words = [word.lemma_ for word in nlp(input_text)]
+    morph = MorphAnalyzer()
+    input_words = [morph.parse(word)[0].normal_form for word in input_text.split()]
     input_text = ' '.join(input_words)
 
     return input_text
