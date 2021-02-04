@@ -8,9 +8,9 @@
 import numpy as np
 import warnings
     
-def extractFeatures(audioFile,framelength,frameshift,nfilters,ncoeff):
+def extractFeatures(y,sr,framelength,frameshift,nfilters,ncoeff):
     import librosa
-    y, sr = librosa.load(audioFile,sr=None)
+    # y, sr = librosa.load(audioFile,sr=None)
     frame_length_inSample=framelength*sr
     hop = int(frameshift*sr)
     NFFT=int(2**np.ceil(np.log2(frame_length_inSample)))
@@ -95,15 +95,15 @@ def readSADfile(path,filename,ext,nFeatures,frameshift, format):
             notEvaluatedFramesMask[0,int(it):int(et)]=1
     return notEvaluatedFramesMask
 
-def getSADfile(config,filename,nFeatures):
+def getSADfile(data, sr, config,filename,nFeatures):
     
     """ The following VAD applying procedure is adapted from the repository
     provided as part of the DIHARD II challenge speech enhancement system:    
     https://github.com/staplesinLA/denoising_DIHARD18/blob/master/main_get_vad.py"""
     
     import os
-    from librosa import load
-    data, sr = load(config['PATH']['audio']+filename+config['EXTENSION']['audio'],sr=None)    
+    # from librosa import load
+    # data, sr = load(config['PATH']['audio']+filename+config['EXTENSION']['audio'],sr=None)
     va_framed = py_webrtcvad(data, fs=sr, fs_vad=sr, hoplength=30, vad_mode=0)
     segments = get_py_webrtcvad_segments(va_framed,sr)
     if not os.path.isdir(config['PATH']['SAD']):
@@ -750,7 +750,7 @@ class HTKFile:
             if (paramKind & 0o100) != 0:
                 self.qualifiers.append("E")
             if (paramKind & 0o200) != 0:
-                qualifiers.append("N")
+                self.qualifiers.append("N")
             if (paramKind & 0o400) != 0:
                 self.qualifiers.append("D")
             if (paramKind & 0o1000) != 0:

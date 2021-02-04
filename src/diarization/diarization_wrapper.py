@@ -1,9 +1,10 @@
 import configparser
 import os
+from pathlib import Path
 
 import numpy as np
-from pyAudioAnalysis import audioBasicIO
 from pydiarization.diarization_wrapper import rttm_to_string
+from scipy.io import wavfile
 
 from .pyBK.main import runDiarization
 
@@ -14,16 +15,21 @@ def getCurrentSpeakerCut(rttmString):
            rttmString.split(' ')[7]
 
 
-def runDiarization_wrapper(showName):
+def runDiarization_wrapper(showName, signal, sr, diarization_dir: Path):
     """Running Diarization from pyBK and returning stereo array in output"""
 
     # reading pyBK config file
-    configFile = './diarization/pyBK/config.ini'
+    configFile = diarization_dir / 'pyBK' / 'config.ini'
     config = configparser.ConfigParser()
     config.read(configFile)
+
     # extracting file name
     baseFileName = os.path.basename(showName)
     fileName = os.path.splitext(baseFileName)[0]
+
+    # fix paths
+    for k in config['PATH']:
+        config['PATH'][k] = str(diarization_dir / config['PATH'][k]) + '/'
 
     # If the output file already exists from a previous call it is deleted
     if os.path.isfile(config['PATH']['output'] + config['EXPERIMENT']['name'] + config['EXTENSION']['output']):
@@ -42,17 +48,17 @@ def runDiarization_wrapper(showName):
 
     # Start of diarization
     print('\nProcessing file', fileName)
-    runDiarization(fileName, config)
+    runDiarization(fileName, signal, sr, config)
 
     # Parsing rttm file for extraction speakers time
     rttm_file = config['EXPERIMENT']['name'] + ".rttm"
-    path = "./diarization/pyBK/out/" + rttm_file
+    path = config['PATH']['output'] + rttm_file
     rttmString = rttm_to_string(path)
     resArray = rttmString.split('SPEAKER')
 
     # Reading mono file
-    sampling_rate, signal = audioBasicIO.read_audio_file(showName)
-    signal = audioBasicIO.stereo_to_mono(signal)
+    signal = (signal * 2 ** 16 - 1) / 2
+    signal = signal.astype(np.int16)
 
     # arrays for left and right  channels of stereo file
     left = np.zeros(len(signal))
@@ -62,8 +68,8 @@ def runDiarization_wrapper(showName):
     for i in range(1, len(resArray)):
         # convertion time to sample number
         begin, end, speaker = getCurrentSpeakerCut(resArray[i])
-        begin = int(begin * sampling_rate)
-        end = int(end * sampling_rate)
+        begin = int(begin * sr)
+        end = int(end * sr)
 
         if speaker == 'speaker1':
             left[begin:end] = signal[begin:end]
@@ -78,8 +84,7 @@ def runDiarization_wrapper(showName):
     stereo_array = np.vstack((left.astype(np.int16), right.astype(np.int16))).T
 
     # saving stereo file
-    # output_file = config['PATH']['file_output'] + fileName + "_stereo.wav"
-    # write(output_file, sampling_rate, stereo_array)
+    output_file = config['PATH']['file_output'] + fileName + "_stereo.wav"
+    wavfile.write(output_file, sr, stereo_array)
 
-    # return stereo_array
-    return stereo_array
+    return output_file
