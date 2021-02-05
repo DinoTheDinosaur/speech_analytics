@@ -1,6 +1,5 @@
 import json
 from pathlib import Path
-from pprint import pprint
 from typing import Dict, Optional
 
 import nltk
@@ -12,6 +11,7 @@ from src.black_list.black_list import Blacklist
 from src.diarization import runDiarization_wrapper
 from src.id_channel.identification import identify_operator
 from src.noise_suppression import NeuralNetworkNoiseSuppressor
+from src.pause_and_interruption import interruption_detection, pause_detection
 from src.vad.vad_pyannote import VoiceActivityDetection
 from src.white_list.white_list import WhiteCheck
 from src.yandex_speech_kit.yandex_speech_kit import yandex_speech
@@ -85,5 +85,8 @@ class AudioProcessor:
 
         vad = VoiceActivityDetection()
         markup = vad.get_timelines(str(diarized_path), op_channel_num)
+
+        output['Средняя длина паузы оператора'] = pause_detection(markup)
+        output['Число перебиваний'] = interruption_detection(audio_path, markup)
 
         return output
