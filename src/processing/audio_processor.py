@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Optional
 
 import nltk
 from scipy.io import wavfile
@@ -37,7 +37,7 @@ class AudioProcessor:
         nltk.download('punkt')
         nltk.download('stopwords')
 
-    def process(self, audio_path: Path) -> Dict:
+    def process(self, audio_path: Path) -> str:
         diarization_path = Path(__file__).parent.parent / 'diarization'
 
         # suppress noise
@@ -87,6 +87,7 @@ class AudioProcessor:
         markup = vad.get_timelines(str(diarized_path), op_channel_num)
 
         output['Средняя длина паузы оператора'] = pause_detection(markup)
-        output['Число перебиваний'] = interruption_detection(audio_path, markup)
+        output['Число перебиваний'] = -interruption_detection(audio_path, markup)
+        output['Суммарная оценка'] = sum(output.values())
 
-        return output
+        return '\n'.join([f'{k}:   {v}' for k, v in output.items()])
