@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from pprint import pprint
-from typing import Dict
+from typing import Dict, Optional
 
 import nltk
 from scipy.io import wavfile
@@ -14,27 +14,36 @@ from src.id_channel.identification import identify_operator
 from src.noise_suppression import NeuralNetworkNoiseSuppressor
 from src.vad.vad_pyannote import VoiceActivityDetection
 from src.white_list.white_list import WhiteCheck
-
-SAMPLE_RATE: int = 16000
+from src.yandex_speech_kit.yandex_speech_kit import yandex_speech
 
 
 class AudioProcessor:
     def __init__(self, suppressor_model_weights: Path, vosk_model: Path, white_list: Path, obscene_corpus: Path,
-                 threats_corpus: Path, white_checklist: Path, black_checklist: Path) -> None:
+                 threats_corpus: Path, white_checklist: Path, black_checklist: Path,
+                 recognition_engine: str = 'vosk', bucket: Optional[str] = None, aws_key: Optional[str] = None,
+                 aws_key_id: Optional[str] = None, ya_api_key: Optional[str] = None) -> None:
         self.__suppressor = NeuralNetworkNoiseSuppressor(suppressor_model_weights)
         self.__vosk_model = Model(str(vosk_model))
         self.__white_checker = WhiteCheck(white_list)
         self.__black_checker = Blacklist(obscene_corpus, threats_corpus)
         self.__white_checklist = white_checklist
         self.__black_checklist = black_checklist
+        self.__rec_engine = recognition_engine
+        self.__bucket = bucket
+        self.__aws_key = aws_key
+        self.__aws_key_id = aws_key_id
+        self.__ya_api_key = ya_api_key
 
         nltk.download('punkt')
         nltk.download('stopwords')
 
     def process(self, audio_path: Path) -> Dict:
         diarization_path = Path(__file__).parent.parent / 'diarization'
+
+        # suppress noise
         clean, sr = self.__suppressor.suppress(audio_path, None)
 
+        # diarize
         diarized_path, left, right, signal = runDiarization_wrapper(audio_path, clean, sr, diarization_path)
         left_wav_path = Path('left.wav')
         right_wav_path = Path('right.wav')
@@ -42,14 +51,18 @@ class AudioProcessor:
         wavfile.write(left_wav_path, sr, left)
         wavfile.write(right_wav_path, sr, right)
 
-        left_text = recognize(self.__vosk_model, str(left_wav_path))
+        # speech recognition
+        if self.__rec_engine == 'vosk':
+            left_text = recognize(self.__vosk_model, str(left_wav_path))
+            right_text = recognize(self.__vosk_model, str(right_wav_path))
+        else:
+            left_text = yandex_speech(left_wav_path, self.__bucket, self.__aws_key, self.__aws_key_id,
+                                      self.__ya_api_key)
+            right_text = yandex_speech(left_wav_path, self.__bucket, self.__aws_key, self.__aws_key_id,
+                                       self.__ya_api_key)
+
         left_wav_path.unlink(missing_ok=True)
-
-        right_text = recognize(self.__vosk_model, str(right_wav_path))
         right_wav_path.unlink(missing_ok=True)
-
-        print(f'LEFT CHANNEL TEXT: {left_text}')
-        print(f'RIGHT CHANNEL TEXT: {right_text}')
 
         op_channel_num = int(identify_operator(left_text, right_text))
         op_audio = left if op_channel_num == 0 else right
@@ -72,8 +85,5 @@ class AudioProcessor:
 
         vad = VoiceActivityDetection()
         markup = vad.get_timelines(str(diarized_path), op_channel_num)
-
-        print('VAD')
-        pprint(markup)
 
         return output
