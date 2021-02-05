@@ -1,3 +1,6 @@
+# Custom
+.idea/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +130,17 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# PyCharm stuff
+.idea/
+
+# VAD
+data/
+notebooks/
+
+# Diarization
+src/diarization/out
+src/diarization/pyBK/audio
+src/diarization/pyBK/out
+src/diarization/pyBK/sad
+src/diarization/pyBK/uem
