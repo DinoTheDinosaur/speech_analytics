@@ -1,6 +1,3 @@
-# Custom
-.idea/
-
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -146,3 +143,6 @@ src/diarization/pyBK/audio
 src/diarization/pyBK/out
 src/diarization/pyBK/sad
 src/diarization/pyBK/uem
+
+# Data
+*.wav
