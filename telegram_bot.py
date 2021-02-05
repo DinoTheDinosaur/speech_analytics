@@ -11,6 +11,8 @@ from src.processing.audio_processor import AudioProcessor
 
 CONFIG_PATH: Path = Path(__file__).parent / 'config.yaml'
 DATA_PATH: Path = Path(__file__).parent / 'data'
+IN_PATH: Path = DATA_PATH / 'file.wav'
+OUT_PATH: Path = DATA_PATH / 'file_proc.wav'
 
 GREETING: str = "Hi, I'm CallCenterAnalyticsBot. Ready to get dialog recording (in .wav) and return a report about " \
                 "operator's work."
@@ -44,12 +46,16 @@ def print_report(update, context):
 
 
 def process_file():
+
     out, _ = (ffmpeg.
-              input(str((DATA_PATH / 'file.wav').resolve())).
-              output(str((DATA_PATH / 'file_proc.wav').resolve()), acodec='pcm_s16le', ac=1, ar='8000').
+              input(str(IN_PATH.resolve())).
+              output(str(OUT_PATH.resolve()), acodec='pcm_s16le', ac=1, ar='8000').
               overwrite_output().
               run()
               )
+
+    IN_PATH.unlink()
+    OUT_PATH.unlink()
 
     return AUDIO_PROC.process(DATA_PATH / 'file_proc.wav')
 
