@@ -42,11 +42,12 @@ def wav_downloader(update, context):
 
 
 def print_report(update, context):
+    OUT_PATH.unlink()
+
     context.bot.send_message(chat_id=update.effective_chat.id, text=REPORT)
 
 
 def process_file():
-
     out, _ = (ffmpeg.
               input(str(IN_PATH.resolve())).
               output(str(OUT_PATH.resolve()), acodec='pcm_s16le', ac=1, ar='8000').
@@ -55,7 +56,6 @@ def process_file():
               )
 
     IN_PATH.unlink()
-    OUT_PATH.unlink()
 
     return AUDIO_PROC.process(DATA_PATH / 'file_proc.wav')
 
