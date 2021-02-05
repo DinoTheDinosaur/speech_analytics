@@ -21,6 +21,7 @@
   <component name="ChangeListManager">
     <list default="true" id="651a9db2-0aad-4197-8930-5c55f59814a2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/speech_analytics_bot/telegram_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/speech_analytics_bot/telegram_bot.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -95,7 +96,8 @@
       <workItem from="1612456349229" duration="31000" />
       <workItem from="1612457982978" duration="26000" />
       <workItem from="1612458029000" duration="82000" />
-      <workItem from="1612462094797" duration="3615000" />
+      <workItem from="1612462094797" duration="8604000" />
+      <workItem from="1612519659302" duration="3745000" />
     </task>
     <servers />
   </component>
@@ -112,8 +114,13 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="527" y="254" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1612521645877">
+      <screen x="0" y="40" width="1536" height="824" />
+    </state>
+    <state x="527" y="254" key="#com.intellij.fileTypes.FileTypeChooser/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612521645877" />
     <state x="93" y="133" width="1350" height="638" key="DiffContextDialog" timestamp="1612464465715">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
@@ -122,22 +129,22 @@
       <screen x="0" y="40" width="1536" height="824" />
     </state>
     <state x="549" y="207" key="FileChooserDialogImpl/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612458111084" />
-    <state width="1493" height="203" key="GridCell.Tab.0.bottom" timestamp="1612466009551">
+    <state width="1493" height="183" key="GridCell.Tab.0.bottom" timestamp="1612523651769">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.bottom/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
-    <state width="1493" height="203" key="GridCell.Tab.0.center" timestamp="1612466009551">
+    <state width="1493" height="183" key="GridCell.Tab.0.bottom/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612523651769" />
+    <state width="1493" height="183" key="GridCell.Tab.0.center" timestamp="1612523651769">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.center/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
-    <state width="1493" height="203" key="GridCell.Tab.0.left" timestamp="1612466009551">
+    <state width="1493" height="183" key="GridCell.Tab.0.center/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612523651769" />
+    <state width="1493" height="183" key="GridCell.Tab.0.left" timestamp="1612523651769">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.left/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
-    <state width="1493" height="203" key="GridCell.Tab.0.right" timestamp="1612466009551">
+    <state width="1493" height="183" key="GridCell.Tab.0.left/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612523651769" />
+    <state width="1493" height="183" key="GridCell.Tab.0.right" timestamp="1612523651769">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
-    <state width="1493" height="203" key="GridCell.Tab.0.right/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612466009551" />
+    <state width="1493" height="183" key="GridCell.Tab.0.right/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612523651769" />
     <state x="93" y="133" width="1350" height="638" key="ShowDiffWithBranchDialog" timestamp="1612464465715">
       <screen x="0" y="40" width="1536" height="824" />
     </state>
@@ -148,6 +155,6 @@
     <state x="586" y="366" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.40.1536.824/1920.0.2498.1080@0.40.1536.824" timestamp="1612464138107" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/speech_analytics$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1612466009542" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/speech_analytics_bot" />
+    <SUITE FILE_PATH="coverage/speech_analytics$telegram_bot.coverage" NAME="telegram_bot Coverage Results" MODIFIED="1612523651757" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/src/speech_analytics_bot" />
   </component>
 </project>
