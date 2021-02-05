@@ -138,7 +138,6 @@ config.yaml
 .idea/
 
 # VAD
-data/
 notebooks/
 
 # Diarization
