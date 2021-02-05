@@ -1,0 +1,9 @@
+suppressor_model_weights: "./data/model_weights.ckpt"
+vosk_model: "./data/vosk-model-ru-0.10"
+white_list: "./data/white_list.json"
+obscene_corpus: "./data/obscene_corpus.json"
+threats_corpus: "./data/threats_corpus.json"
+white_checklist: "./data/check_list_white.json"
+black_checklist: "./data/check_list_black.json"
+
+audio_path: ".data/audio.wav"
