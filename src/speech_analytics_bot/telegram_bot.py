@@ -29,12 +29,22 @@ def wav_downloader(update, context):
         context.bot.get_file(update.message.document).download(out=f)
     context.bot.send_message(chat_id=update.effective_chat.id, text="File saved")
     context.bot.send_message(chat_id=update.effective_chat.id, text="Starting processing")
-    convert_wav()
+    convert_wav(update, context)
+    print_report(update, context)
 
+def print_report(update, context):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="This is report. Pum Pum Pum")
 
 def convert_wav():
-    ffmpeg.input(data_folder / "file.wav").output('-', format='s16le', acodec='pcm_s16le', ac=1, ar='8k').overwrite_output().run()
+    out, _ = (ffmpeg.
+              input(data_folder / "file.wav").
+              output("../../data/file.wav", format='s16le', acodec='pcm_s16le', ac=1, ar='8k').
+              overwrite_output().
+              run()
+              )
+    print(out)
     print('File converted succesfully!')
+
 
 
 start_handler = CommandHandler('start', start)
