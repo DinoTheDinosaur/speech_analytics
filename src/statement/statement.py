@@ -1,10 +1,16 @@
 import json
+import numpy as np
+from scipy.io.wavfile import write
 
 from src.black_list.black_list import Blacklist
 from src.id_channel.identification import identify_operator
 from src.statement import conf
 from src.vosk_asr.vosk_asr import recognize
 from src.white_list.white_list import WhiteCheck
+
+
+def input_preprocessing(data, file_path: str):
+    write(file_path, conf.samplerate, data.astype(np.int16))
 
 
 def evaluate_operator(file_path1: str, file_path2: str) -> dict:
@@ -29,6 +35,17 @@ def evaluate_operator(file_path1: str, file_path2: str) -> dict:
         for key, value in count_dict.items():
             output[black_weights[key][0]] = value * black_weights[key][1]
 
-    # TODO: "Долг" и "просрочка" (?), перебивания
+    # TODO: перебивания
 
     return output
+
+
+def process(data1, data2) -> dict:
+    """
+    :param data1 is ndarray with int16-elements for first channel
+    :param data2 is ndarray with int16-elements for second channel
+    :returns dict with calculation of operator's rating
+    """
+    input_preprocessing(data1, conf.FIRST_CHANNEL)
+    input_preprocessing(data2, conf.SECOND_CHANNEL)
+    return evaluate_operator(conf.FIRST_CHANNEL, conf.SECOND_CHANNEL)

@@ -44,19 +44,23 @@ class Blacklist:
     def bad_words(self, text):
         """
         Принимает строку, возвращает словарь.
-        Подсчёт слов из blacklist, obs - мат, threats - угрозы, you - обращение на "ты", cho - чо/че/чё
+        Подсчёт слов из blacklist, obs - мат, threats - угрозы, you - обращение на "ты", cho - чо/че/чё, debt - долг,
+        delay - просрочка
         """
         words = self.lemmatize(text)
         count_obs = [w for w in words if w in self.obs]
         count_threats = [w for w in words if w in self.threats]
         count_you = [w for w in words if w in set(['ты', 'твой'])]
         count_cho = [w for w in text.lower().split() if w in set(['че', 'чё', 'чо'])]
+        count_debt = [w for w in words if w in set(['долг', 'должный', 'должник'])]
+        count_delay = [w for w in words if w in set(['просрочка', 'просрок', 'просрочить'])]
 
         if self.return_badwords:
-            return {'obs': len(count_obs), 'threats': len(count_threats), 'you': len(count_you),
-                    'cho': len(count_cho)}, count_obs, count_threats
+            return {'obs': len(count_obs), 'threats': len(count_threats), 'you': len(count_you), 'cho': len(count_cho),
+                    'debt': len(count_debt), 'delay': len(count_delay)}, count_obs, count_threats
         else:
-            return {'obs': len(count_obs), 'threats': len(count_threats), 'you': len(count_you), 'cho': len(count_cho)}
+            return {'obs': len(count_obs), 'threats': len(count_threats), 'you': len(count_you), 'cho': len(count_cho),
+                    'debt': len(count_debt), 'delay': len(count_delay)}
 
     def update_obscene(self, new_text):
         """
