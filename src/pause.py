@@ -14,7 +14,8 @@ def pause_detection(vad_dictionary):
   for client_end in client_activity[1]:
     operator_client_diff = operator_activity[0]-client_end
     operator_client_diff = operator_client_diff[operator_client_diff>0]
-    if len(operator_timeline.overlapping(client_end)) == 0:
-      operator_delays.append(operator_client_diff.min())
+    if len(operator_client_diff)>0:
+      if len(operator_timeline.overlapping(client_end)) == 0:
+        operator_delays.append(operator_client_diff.min())
 
   return np.mean(operator_delays)
