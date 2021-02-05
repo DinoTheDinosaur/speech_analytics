@@ -6,6 +6,7 @@ import numpy as np
 from pydiarization.diarization_wrapper import rttm_to_string
 from scipy.io import wavfile
 
+from src.utils import clear_dir
 from .pyBK.main import runDiarization
 
 
@@ -88,5 +89,9 @@ def runDiarization_wrapper(showName, signal, sr, diarization_dir: Path):
     # saving stereo file
     output_file = config['PATH']['file_output'] + fileName + "_stereo.wav"
     wavfile.write(output_file, sr, stereo_array)
+
+    # cleanup
+    clear_dir(diarization_dir / 'pyBK' / 'out')
+    clear_dir(diarization_dir / 'pyBK' / 'sad')
 
     return output_file, left, right, stereo_array
