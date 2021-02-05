@@ -1,6 +1,6 @@
 import numpy as np
 from pyannote.core import Timeline, Segment
-from interruption import change_dict_format
+from src.pause_and_interruption.interruption import change_dict_format
 
 
 def pause_detection(vad_dictionary):
