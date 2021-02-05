@@ -81,10 +81,12 @@ def runDiarization_wrapper(showName, signal, sr, diarization_dir: Path):
 
     # convert float to int - it help to avoid problems with incorrectly saved wav file
     # combine left and right signal into one 2D array
-    stereo_array = np.vstack((left.astype(np.int16), right.astype(np.int16))).T
+    left = left.astype(np.int16)
+    right = right.astype(np.int16)
+    stereo_array = np.vstack((left, right)).T
 
     # saving stereo file
     output_file = config['PATH']['file_output'] + fileName + "_stereo.wav"
     wavfile.write(output_file, sr, stereo_array)
 
-    return output_file
+    return output_file, left, right, stereo_array

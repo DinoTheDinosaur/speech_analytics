@@ -16,16 +16,12 @@ class AudioProcessor:
         diarization_path = Path(__file__).parent.parent / 'diarization'
         clean, sr = self.__suppressor.suppress(audio_path, None)
 
-        diarized = runDiarization_wrapper(audio_path, clean, sr, diarization_path)
+        diarized_path, left, right, signal = runDiarization_wrapper(audio_path, clean, sr, diarization_path)
 
         # # TODO: operator channel is unknown for now
         vad = VoiceActivityDetection()
-        markup = vad.get_timelines(str(diarized), 0)
+        markup = vad.get_timelines(str(diarized_path), 0)
 
         pprint(markup)
 
         return 0
-
-
-ap = AudioProcessor(Path(r''))
-ap.process(Path(r''))
