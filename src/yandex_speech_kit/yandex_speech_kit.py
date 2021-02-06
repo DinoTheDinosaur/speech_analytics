@@ -49,7 +49,7 @@ def yandex_speech(input_link: str, bucket: str, aws_secret_access_key: str,
 
     # Запрашивать на сервере статус операции, пока распознавание не будет завершено.
     wait = 0
-    while wait <= 10:
+    while wait <= 60:
 
         time.sleep(1)
         wait += 1
@@ -59,14 +59,18 @@ def yandex_speech(input_link: str, bucket: str, aws_secret_access_key: str,
         if req['done']:
             break
 
-    # Текст результатов распознавания.
-    output_text = ''
-    for chunk in req['response']['chunks']:
-        c = chunk['alternatives'][0]['text']
-        output_text += ' ' + c
-
     # удаление объекта в облаке
     for_deletion = [{'Key': 'obj.wav'}]
     s3.delete_objects(Bucket=bucket, Delete={'Objects': for_deletion})
+
+    # Текст результатов распознавания.
+    output_text = ''
+
+    if req['done']:
+        for chunk in req['response']['chunks']:
+            c = chunk['alternatives'][0]['text']
+            output_text += ' ' + c
+    else:
+        raise TimeoutError('no response from YSK')
 
     return output_text
