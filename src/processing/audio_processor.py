@@ -58,7 +58,7 @@ class AudioProcessor:
         else:
             left_text = yandex_speech(left_wav_path, self.__bucket, self.__aws_key, self.__aws_key_id,
                                       self.__ya_api_key)
-            right_text = yandex_speech(left_wav_path, self.__bucket, self.__aws_key, self.__aws_key_id,
+            right_text = yandex_speech(right_wav_path, self.__bucket, self.__aws_key, self.__aws_key_id,
                                        self.__ya_api_key)
 
         left_wav_path.unlink(missing_ok=True)
