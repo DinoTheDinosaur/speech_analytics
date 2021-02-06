@@ -52,20 +52,31 @@ class AudioProcessor:
         wavfile.write(right_wav_path, sr, right)
 
         # speech recognition
-        if self.__rec_engine == 'vosk':
+        if self.__rec_engine == 'yandex':
+            try:
+                left_text = yandex_speech(str(left_wav_path), self.__bucket, self.__aws_key,
+                                          self.__aws_key_id,
+                                          self.__ya_api_key)
+            except TimeoutError:
+                print('YSK recognition failed for left channel, using vosk')
+                left_text = recognize(self.__vosk_model, str(left_wav_path))
+
+            try:
+                right_text = yandex_speech(str(right_wav_path), self.__bucket, self.__aws_key,
+                                           self.__aws_key_id,
+                                           self.__ya_api_key)
+            except TimeoutError:
+                print('YSK recognition failed for right channel, using vosk')
+                right_text = recognize(self.__vosk_model, str(right_wav_path))
+        else:
             left_text = recognize(self.__vosk_model, str(left_wav_path))
             right_text = recognize(self.__vosk_model, str(right_wav_path))
-        else:
-            left_text = yandex_speech(str(left_wav_path), self.__bucket, self.__aws_key, self.__aws_key_id,
-                                      self.__ya_api_key)
-            right_text = yandex_speech(str(right_wav_path), self.__bucket, self.__aws_key, self.__aws_key_id,
-                                       self.__ya_api_key)
 
         left_wav_path.unlink(missing_ok=True)
         right_wav_path.unlink(missing_ok=True)
 
         op_channel_num = int(identify_operator(left_text, right_text))
-        op_text = left_text if op_channel_num == 0 else right
+        op_text = left_text if op_channel_num == 0 else right_text
         output = {}
 
         with open(self.__white_checklist, 'r', encoding='utf-8') as f:
@@ -91,10 +102,10 @@ class AudioProcessor:
         print(white_keys)
         print(black_keys)
 
-        output['Число перебиваний'] = -interruption_detection(audio_path, markup)
+        output['Перебивания'] = -interruption_detection(audio_path, markup)
         score = 10 - sum(output[k] for k in white_keys) - 9 + sum(output[k] for k in black_keys)
 
-        output['Число перебиваний'] = -output['Число перебиваний']
+        output['Перебивания'] = -output['Перебивания']
         output['Средняя длина паузы оператора'] = pause_detection(markup)
         output['Итоговая оценка'] = score if score > 0 else 0
 
