@@ -59,3 +59,8 @@ python run_bot.py
 In case you didn't find necessary data in the repository, you can download it directly:
 * [Noise suppressor model weights](https://drive.google.com/file/d/1Ih8pZ3n4i6VXgwKFYQfMWu3PwCiPtgpG/view)
 * [Vosk model](https://alphacephei.com/vosk/models)
+
+# CompTech 2021
+* [Технический проект](https://docs.google.com/document/d/1jLiDmdPZaRlNvCNtiNmEHCS2ZOK0XDdi7ywtUssIlNM/edit?usp=sharing)
+* [Техническое задание](https://docs.google.com/document/d/1zfrNlRrlqfpwu3aPvmqAVw_UwfJXdKb8wJ2hC7-WKU4/edit?usp=sharing)
+* [Руководство пользователя](https://docs.google.com/document/d/1xItH4Xq1IK36KrAj7ykrxKjiqRLaTJUcrGsqtBjqwRk/edit?usp=sharing)
