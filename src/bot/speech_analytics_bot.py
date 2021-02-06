@@ -2,6 +2,7 @@ from pathlib import Path
 from typing import Dict
 
 import ffmpeg
+from telegram import ParseMode
 from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Dispatcher
 
 from src.processing import AudioProcessor
@@ -40,7 +41,7 @@ class SpeechAnalyticsBot:
     def __send_report(self, update, context):
         self.__out_path.unlink()
 
-        context.bot.send_message(chat_id=update.effective_chat.id, text=self.__report)
+        context.bot.send_message(chat_id=update.effective_chat.id, text=self.__report, parse_mode=ParseMode.HTML)
 
     def __process_file(self) -> str:
         out, _ = (ffmpeg.
