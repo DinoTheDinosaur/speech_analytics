@@ -3,7 +3,6 @@ from pathlib import Path
 from typing import Optional
 
 import nltk
-from json2html import json2html
 from scipy.io import wavfile
 from vosk import Model
 
@@ -85,12 +84,17 @@ class AudioProcessor:
             count_list = self.__white_checker.count_white_phrases(op_text)
 
             for i in range(len(white_weights)):
+                if count_list[i] >= 1:
+                    estimate = 0
+                else:
+                    estimate = white_weights[i][1]
+
                 output[white_weights[i][0]] = {
                     'description': white_weights[i][0],
                     'weight': white_weights[i][1],
-                    'count': count_list[i]
+                    'count': count_list[i],
+                    'estimate': estimate
                 }
-                #output[white_weights[i][0]] = count_list[i] * white_weights[i][1]
 
         with open(self.__black_checklist, 'r', encoding='utf-8') as f:
             black_weights = json.load(f)
@@ -100,34 +104,27 @@ class AudioProcessor:
                 output[black_weights[key][0]] = {
                     'description': black_weights[key][0],
                     'weight': black_weights[key][1],
-                    'count': value
+                    'count': value,
+                    'estimate': black_weights[key][1] * value
                 }
-                #output[black_weights[key][0]] = value * black_weights[key][1]
 
         vad = VoiceActivityDetection()
         markup = vad.get_timelines(str(diarized_path), op_channel_num)
 
-        #white_keys = [k[0] for k in white_weights]
-        #black_keys = [black_weights[k][0] for k in black_weights]
-
-
+        num_interruption = interruption_detection(audio_path, markup)
         output['Перебивания'] = {
             'description': "Перебивания",
             'weight': 1,
-            'count': interruption_detection(audio_path, markup)
+            'count': num_interruption,
+            'estimate': num_interruption
         }
 
-        output['Итоговая оценка'] = 0
+        glob_estimate = 0
+
         for key in output.keys():
-            output['Итоговая оценка'] += output[key]['weight'] * output[key]['count']
-        #score = 10 - sum(output[k] for k in white_keys) - 9 + sum(output[k] for k in black_keys)
+            glob_estimate += output[key]['estimate']
 
-        #output['Перебивания'] = -output['Перебивания']
         output['Средняя длина паузы оператора'] = pause_detection(markup)
+        output['Итоговая оценка'] = glob_estimate
 
-        #output['Итоговая оценка'] = score if score > 0 else 0
-
-        # html = json2html.convert(json = output)
-
-        return json2html.convert(json = output)
-        # return '\n'.join([f'{k}:   {v}' for k, v in output.items()])
+        return '\n'.join([f'{k}:   {output[k]["count"]}' for k in output])

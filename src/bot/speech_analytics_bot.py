@@ -5,7 +5,6 @@ import audioread
 import numpy as np
 import scipy.signal
 from scipy.io import wavfile
-from telegram import ParseMode
 from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Dispatcher
 
 from src.processing import AudioProcessor
@@ -76,7 +75,7 @@ class SpeechAnalyticsBot:
     def __send_report(self, update, context):
         self.__out_path.unlink()
 
-        context.bot.send_message(chat_id=update.effective_chat.id, text=self.__report, parse_mode=ParseMode.HTML)
+        context.bot.send_message(chat_id=update.effective_chat.id, text=self.__report)
 
     def __process_file(self) -> str:
         _audio_decoder(self.__in_path, write_path=self.__out_path)
