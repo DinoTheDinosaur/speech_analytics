@@ -56,9 +56,9 @@ class AudioProcessor:
             left_text = recognize(self.__vosk_model, str(left_wav_path))
             right_text = recognize(self.__vosk_model, str(right_wav_path))
         else:
-            left_text = yandex_speech(left_wav_path, self.__bucket, self.__aws_key, self.__aws_key_id,
+            left_text = yandex_speech(str(left_wav_path), self.__bucket, self.__aws_key, self.__aws_key_id,
                                       self.__ya_api_key)
-            right_text = yandex_speech(right_wav_path, self.__bucket, self.__aws_key, self.__aws_key_id,
+            right_text = yandex_speech(str(right_wav_path), self.__bucket, self.__aws_key, self.__aws_key_id,
                                        self.__ya_api_key)
 
         left_wav_path.unlink(missing_ok=True)
@@ -85,9 +85,17 @@ class AudioProcessor:
         vad = VoiceActivityDetection()
         markup = vad.get_timelines(str(diarized_path), op_channel_num)
 
+        white_keys = [k[0] for k in white_weights]
+        black_keys = [black_weights[k][0] for k in black_weights]
+
+        print(white_keys)
+        print(black_keys)
+
         output['Число перебиваний'] = -interruption_detection(audio_path, markup)
-        output['Суммарная оценка'] = sum(output.values())
+        score = 10 - sum(output[k] for k in white_keys) - 9 + sum(output[k] for k in black_keys)
+
         output['Число перебиваний'] = -output['Число перебиваний']
         output['Средняя длина паузы оператора'] = pause_detection(markup)
+        output['Итоговая оценка'] = score if score > 0 else 0
 
         return '\n'.join([f'{k}:   {v}' for k, v in output.items()])
