@@ -1,9 +1,21 @@
+# for SR (yandex or vosk)
+recognition_engine: "vosk"
+
+# necessary files (models, corpuses, etc.)
 suppressor_model_weights: "./data/model_weights.ckpt"
-vosk_model: "./data/vosk-model-ru-0.10"
+vosk_model: ""
 white_list: "./data/white_list.json"
 obscene_corpus: "./data/obscene_corpus.json"
 threats_corpus: "./data/threats_corpus.json"
 white_checklist: "./data/check_list_white.json"
 black_checklist: "./data/check_list_black.json"
 
-audio_path: ".data/audio.wav"
+# for Telegram bot
+bot_token: ""
+
+# for Yandex Speech kit
+bucket: ""
+aws_key: ""
+aws_key_id: ""
+ya_api_key: ""
+
