@@ -1,9 +1,7 @@
-import logging
 from pathlib import Path
 from typing import Dict
 
 import ffmpeg
-import yaml
 from telegram.ext import CommandHandler, MessageHandler, Filters, Updater, Dispatcher
 
 from src.processing import AudioProcessor
