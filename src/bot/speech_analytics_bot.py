@@ -72,28 +72,3 @@ class SpeechAnalyticsBot:
     @staticmethod
     def __echo(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
-
-
-CONFIG_PATH: Path = Path(__file__).parent / 'config.yaml'
-
-
-if __name__ == '__main__':
-    logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                        level=logging.INFO)
-
-    with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
-        cfg = yaml.safe_load(f)
-
-    print('initializing audio processor...')
-    AUDIO_PROC = AudioProcessor(Path(cfg['suppressor_model_weights']),
-                                Path(cfg['vosk_model']),
-                                Path(cfg['white_list']),
-                                Path(cfg['obscene_corpus']),
-                                Path(cfg['threats_corpus']),
-                                Path(cfg['white_checklist']),
-                                Path(cfg['black_checklist']),
-                                cfg['recognition_engine'],
-                                cfg['bucket'],
-                                cfg['aws_key'],
-                                cfg['aws_key_id'],
-                                cfg['ya_api_key'])
