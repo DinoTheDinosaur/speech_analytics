@@ -6,15 +6,15 @@ import nltk
 from scipy.io import wavfile
 from vosk import Model
 
-from src.asr.vosk_asr import recognize
-from src.black_list.black_list import Blacklist
+from src.asr import recognize
+from src.black_list import Blacklist
 from src.diarization import runDiarization_wrapper
-from src.id_channel.identification import identify_operator
+from src.id_channel import identify_operator
 from src.noise_suppression import NeuralNetworkNoiseSuppressor
 from src.pause_and_interruption import interruption_detection, pause_detection
-from src.vad.vad_pyannote import VoiceActivityDetection
-from src.white_list.white_list import WhiteCheck
-from src.yandex_speech_kit.yandex_speech_kit import yandex_speech
+from src.vad import VoiceActivityDetection
+from src.white_list import WhiteCheck
+from src.yandex_speech_kit import yandex_speech
 
 
 class AudioProcessor:
@@ -65,7 +65,6 @@ class AudioProcessor:
         right_wav_path.unlink(missing_ok=True)
 
         op_channel_num = int(identify_operator(left_text, right_text))
-        op_audio = left if op_channel_num == 0 else right
         op_text = left_text if op_channel_num == 0 else right
         output = {}
 
@@ -86,8 +85,9 @@ class AudioProcessor:
         vad = VoiceActivityDetection()
         markup = vad.get_timelines(str(diarized_path), op_channel_num)
 
-        output['Средняя длина паузы оператора'] = pause_detection(markup)
         output['Число перебиваний'] = -interruption_detection(audio_path, markup)
         output['Суммарная оценка'] = sum(output.values())
+        output['Число перебиваний'] = -output['Число перебиваний']
+        output['Средняя длина паузы оператора'] = pause_detection(markup)
 
         return '\n'.join([f'{k}:   {v}' for k, v in output.items()])
