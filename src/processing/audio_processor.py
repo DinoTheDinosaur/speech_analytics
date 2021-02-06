@@ -124,7 +124,11 @@ class AudioProcessor:
         for key in output.keys():
             glob_estimate += output[key]['estimate']
 
+        res = '\n'.join([f'{k}:   {output[k]["count"]}' for k in output])
+
         output['Средняя длина паузы оператора'] = pause_detection(markup)
         output['Итоговая оценка'] = glob_estimate
 
-        return '\n'.join([f'{k}:   {output[k]["count"]}' for k in output])
+        res += '\n' + str(output['Средняя длина паузы оператора']) + '\n' + str(output['Итоговая оценка'])
+
+        return res
