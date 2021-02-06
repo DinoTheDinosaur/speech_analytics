@@ -129,6 +129,7 @@ class AudioProcessor:
         output['Средняя длина паузы оператора'] = pause_detection(markup)
         output['Итоговая оценка'] = glob_estimate
 
-        res += '\n' + str(output['Средняя длина паузы оператора']) + '\n' + str(output['Итоговая оценка'])
+        res += '\nСредняя длина паузы:   ' + str(output['Средняя длина паузы оператора']) + \
+               '\nИтоговая оценка:   ' + str(output['Итоговая оценка'])
 
         return res
