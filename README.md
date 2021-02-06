@@ -53,4 +53,9 @@ python run_bot.py
 ```
 
 # Example answer
-![Example answer](Example%20answer.png)
+![Example answer](https://github.com/DinoTheDinosaur/speech_analytics/blob/develop/Example%20answer.png)
+
+# Models
+In case you didn't find necessary data in the repository, you can download it directly:
+* [Noise suppressor model weights](https://drive.google.com/file/d/1Ih8pZ3n4i6VXgwKFYQfMWu3PwCiPtgpG/view)
+* [Vosk model](https://alphacephei.com/vosk/models)
