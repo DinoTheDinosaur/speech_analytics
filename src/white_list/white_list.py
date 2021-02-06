@@ -1,7 +1,8 @@
-import re
-from pymorphy2 import MorphAnalyzer
 import json
+import re
+
 from nltk.tokenize import word_tokenize
+from pymorphy2 import MorphAnalyzer
 
 
 def search_phrase(input_text: str, phrase: str) -> bool:

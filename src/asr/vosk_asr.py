@@ -1,7 +1,7 @@
-from vosk import KaldiRecognizer, SetLogLevel
-import wave
 import json
+import wave
 
+from vosk import KaldiRecognizer, SetLogLevel
 
 SetLogLevel(-1)
 
@@ -29,4 +29,3 @@ def recognize(model, wav_file_path):
         json_ = json.loads(rec.FinalResult())
 
         return json_['text']
-

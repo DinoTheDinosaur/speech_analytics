@@ -1,7 +1,8 @@
-from pymorphy2 import MorphAnalyzer
-from nltk.corpus import stopwords
-import re
 import json
+import re
+
+from nltk.corpus import stopwords
+from pymorphy2 import MorphAnalyzer
 
 
 class Blacklist:

@@ -18,7 +18,7 @@ class MCV:
         print('Getting MCV metadata...')
 
         metadata: pd.DataFrame = pd.read_csv(self.__basepath / df_name, sep='\t')
-        
+
         files: np.ndarray = metadata['path'].values
         np.random.shuffle(files)
 

@@ -1,12 +1,10 @@
 import os
-import wave
 import tempfile
-
-from dataclasses import dataclass
+import wave
 from collections import deque
+from dataclasses import dataclass
 
 import webrtcvad
-
 from scipy.io import wavfile
 
 

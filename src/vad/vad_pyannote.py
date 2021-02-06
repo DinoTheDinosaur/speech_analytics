@@ -1,9 +1,8 @@
 import os
-import wave
 import tempfile
+import wave
 
 import torch
-
 from pyannote.audio.utils.signal import Binarize
 from scipy.io import wavfile
 

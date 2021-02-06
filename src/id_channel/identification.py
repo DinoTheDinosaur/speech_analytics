@@ -1,4 +1,5 @@
 import re
+
 from pymorphy2 import MorphAnalyzer
 
 marked_phrases = [['Вас приветствует'], ['компания'], ['Страна Экспресс'], ['разговор', 'записываться'],
